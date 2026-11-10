@@ -1,0 +1,38 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/1/Mux4Way16.hdl
+/**
+ * 4-way 16-bit multiplexor:
+ * out = a if sel = 00
+ *       b if sel = 01
+ *       c if sel = 10
+ *       d if sel = 11
+ */
+CHIP Mux4Way16 {
+    IN a[16], b[16], c[16], d[16], sel[2];
+    OUT out[16];
+    
+    PARTS:
+    // // Not versions of select pins
+    // Not(in=sel[0] , out=notsel0 );
+    // Not(in=sel[1] , out=notsel1 );
+    // // created the cases for the select pins
+    // And(a=notsel0 , b=notsel1 , out=case00 );
+    // And(a=notsel0 , b=sel[1] , out=case10 );
+    // And(a=sel[0] , b=notsel1 , out=case01 );
+    // And(a=sel[0] , b=sel[1] , out=case11 );
+    // // can we turn those cases into mapping outputs?
+    // Mux16(a=false , b=a[0..15] , sel=case00 , out=w1 );
+    // Mux16(a=false , b=b[0..15] , sel=case01 , out=w2 );
+    // Mux16(a=false , b=c[0..15] , sel=case10 , out=w3 );
+    // Mux16(a=false , b=d[0..15] , sel=case11 , out=w4 );
+    // // And now we can safely OR them
+    // Or16(a=w1 , b=w2 , out=x1 );
+    // Or16(a=w3 , b=w4 , out=x2 );
+    // Or16(a=x1 , b=x2 , out=out );
+
+    Mux16(a=a , b=b , sel=sel[0] , out=x );
+    Mux16(a=c , b=d , sel=sel[0] , out=y );
+    Mux16(a=x , b=y , sel=sel[1] , out=out );
+}
